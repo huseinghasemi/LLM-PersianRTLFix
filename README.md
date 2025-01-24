@@ -16,7 +16,7 @@
 
 1. این پروژه رو از گیت‌هاب دانلود کنید یا کلون کنید:
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
+   git clone https://github.com/your-username/LLM-PersianRTLFix.git
 وارد صفحه Extensions در کروم بشید:
 
 
