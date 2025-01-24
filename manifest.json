@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Persian RTL Fix",
+  "version": "1.0",
+  "description": "Detect Persian and English text on DeepSeek Chat and apply the correct text direction.",
+  "permissions": ["activeTab"],
+  "content_scripts": [
+    {
+      "matches": ["https://chat.deepseek.com/*", "https://chatgpt.com/*"], 
+      "js": ["content.js"]
+    }
+  ]
+}
