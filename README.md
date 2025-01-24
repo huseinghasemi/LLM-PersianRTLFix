@@ -21,6 +21,7 @@
 
 
 chrome://extensions/
+
 گزینه Developer mode رو روشن کنید.
 
 روی Load unpacked کلیک کنید و پوشه پروژه رو انتخاب کنید.
