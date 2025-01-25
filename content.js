@@ -1,4 +1,7 @@
 function applyTextDirection(el) {
+  // Skip anchor tags (<a>) to avoid interfering with links
+  if (el.tagName.toLowerCase() === "a") return;
+
     const text = el.textContent.trim();
   
     if (!text) return;
