@@ -1,37 +1,43 @@
+const persianRegex = /[\u0600-\u06FF]/;
+const englishRegex = /[A-Za-z]/;
+
 function applyTextDirection(el) {
-  // Skip anchor tags (<a>) to avoid interfering with links
-  if (el.closest("nav")) return;
+  if (el.closest("nav") || el.hasAttribute('dir')) return;
 
   const text = el.textContent.trim();
-
   if (!text) return;
 
-  if (/[\u0600-\u06FF]/.test(text)) {
+  if (persianRegex.test(text)) {
     el.setAttribute("dir", "rtl");
-    el.style.textAlign = "right";
-  } else if (/[A-Za-z]/.test(text)) {
+  } else if (englishRegex.test(text)) {
     el.setAttribute("dir", "ltr");
-    el.style.textAlign = "left";
   }
 }
 
 function processAllElements() {
-  document.querySelectorAll("*").forEach(applyTextDirection);
+  const allElements = document.getElementsByTagName('*');
+  for (let i = 0; i < allElements.length; i++) {
+    applyTextDirection(allElements[i]);
+  }
 }
 
 const observer = new MutationObserver((mutations) => {
-  mutations.forEach((mutation) => {
-    mutation.addedNodes.forEach((node) => {
-      if (node.nodeType === 1) {
-        if (!node.closest("nav")) {
-          applyTextDirection(node);
-          node.querySelectorAll("*").forEach(applyTextDirection);
+  for (const mutation of mutations) {
+    for (const node of mutation.addedNodes) {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        applyTextDirection(node);
+        const descendants = node.getElementsByTagName('*');
+        for (const descendant of descendants) {
+          applyTextDirection(descendant);
         }
       }
-    });
-  });
+    }
+  }
 });
 
-observer.observe(document.body, { childList: true, subtree: true });
+observer.observe(document.body, {
+  childList: true,
+  subtree: true
+});
 
 processAllElements();
